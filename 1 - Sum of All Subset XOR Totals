@@ -1,0 +1,32 @@
+class Solution {
+public:
+    /*
+    Sum of all XOR totals can be onbtained by ORing everything and 
+multiplying by 2 ^ (n-1)
+    
+    XOR sets similar bits to 0 and odd bits to 1
+    Each int appers in half of all possible subsets (2^(n-1))
+    Thus, 
+    Each bit either appears an even number of times (canceled out)
+    or odd number of times
+    If odd, we need to count how many subsets it appears in,
+    Let the number of elements it appears in be k,
+    There are 2^(k-1) ways to select an odd number of elements from k 
+elements
+    If we select this odd number of elements, we need to count all 
+possible ways to 
+    include elements from the remaining (n-k) elements (2^(n-k))
+    2^(k-1) × 2^(n-k) = 2^(n-1)
+    By ORing elements, we can see which bits appear in at least one 
+element (relevant bits)
+    Thus each bit provides bit * 2^(n-1) to the total
+    */
+    int subsetXORSum(vector<int>& nums) {
+        int j = nums[0];
+        for (int i = 1; i < nums.size(); i++) {
+            j = j | nums[i];
+        }
+        return j * (1 << (nums.size()-1)));
+    }
+};
+
