@@ -1,0 +1,18 @@
+class Solution {
+public:
+    bool canPartition(vector<int>& nums) {
+	/*
+	Uses bits for dp table, since they are bools
+	Left shift bitmap by number to create new sums possible after adding number
+	OR original bitmap to include original sums possible before adding number
+	*/
+        int s = accumulate(nums.begin(), nums.end(), 0);
+        if(s%2) return false;
+        bitset<10001> bit(1);
+        for(auto i : nums){
+            bit |= bit<<i;
+            if(bit[s/2]) return bit[s/2];
+        }
+        return bit[s/2];
+    }
+};

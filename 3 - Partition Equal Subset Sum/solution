@@ -1,0 +1,52 @@
+class Solution {
+public:
+    bool canPartition(vector<int>& nums) {
+        /*
+        First attempt, but does not consider all combinations
+        // Sort Descending
+        std::sort(nums.begin(), nums.end(), std::greater<int>());
+
+        int front = nums[0];
+        int back = nums[nums.size() - 1]; // Array index starts at 0, so use size-1
+        int i = 0;
+        int j = nums.size() - 1; // Set j to last valid index initially
+        
+        // Count from both sides
+        while (i < j) { // Changed != to < to avoid overlap
+            if (front >= back) {
+                back += nums[--j];
+            }
+            else {
+                front += nums[++i];
+            }
+        }
+        
+        return (front == back);
+        */
+        /*
+        If sum is even, can be partitioned, if not, cannot
+        The partitions will have sum = total/2
+        Create dp table up till target sum, can we make 1,2,3, etc
+        dp table base case is 0, can always make 0
+        Loop through nums, and decrement from target, j, if number j can be created, change dp[j] to true
+        */
+        int sum = 0;
+        for (int num : nums) {
+            sum += num;
+        }
+        if (sum % 2 != 0) {
+            return false;
+        }
+
+        int target = sum / 2;
+        int n = nums.size();
+        vector<bool> dp(target + 1, false);
+        dp[0] = true;
+        for (int num : nums) {
+            for (int j = target; j >= num; j--) {
+                dp[j] = dp[j] || dp[j-num];
+            }
+        }
+        return dp[target];
+    }
+};
