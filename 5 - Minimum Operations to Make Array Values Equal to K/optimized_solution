@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int minOperations(vector<int>& nums, int k) {
+        // nums = [5,2,5,4,5], k = 2
+        // All nums more than 4 is same, 5, equalize
+        // All nums more than 2 is 4, equalize
+        // If there exists an integer, less than k, not possible to 
+equalize
+        // 
+        // 1) Loop array, add to unordered_set if more than k
+        // 2) Return size
+        unordered_set<int> st;
+
+        for(auto num: nums) {
+            if (num < k)
+                return -1;
+            else if (num > k)
+                st.insert(num);
+        }
+        return st.size();
+    }
+};

@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int minOperations(vector<int>& nums, int k) {
+        // nums = [5,2,5,4,5], k = 2
+        // All nums more than 4 is same, 5, equalize
+        // All nums more than 2 is 4, equalize
+        // If there exists an integer, less than k, not possible to 
+equalize
+        // 
+        // 1) Sort array, check if first less than k
+        // 2) Loop array, count each unique value
+        // 3) add 1 if k not in unique value
+        std::sort(nums.begin(), nums.end());
+        if (nums[0] < k) {
+            return -1;
+        }
+
+        std::set<int> uniqueSet;
+        int op = 0;
+        for (int i = 0; i < nums.size(); i++) {
+            if (uniqueSet.insert(nums[i]).second) {
+                op++;
+            }
+        }
+        if (uniqueSet.count(k)) {
+            op--;
+        }
+        return op;
+    }
+};
